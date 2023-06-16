@@ -60,9 +60,16 @@
         />
         <label class="form-check-label" for="exampleCheck1">Check me out</label>
       </div>
-      <button type="submit" class="btn btn-block btn-primary mt-3">
-        Submit
-      </button>
+      <div>
+        <button
+          v-if="!loading"
+          type="submit"
+          class="btn btn-block btn-primary mt-3"
+        >
+          Submit
+        </button>
+        <div v-if="loading" class="mt-3">Loading . . .</div>
+      </div>
     </form>
   </div>
 </template>
@@ -75,6 +82,7 @@ import store from "../../store";
 import { useRouter } from "vue-router";
 
 const terms = ref(false);
+const loading = ref(false);
 
 const formData = reactive({
   username: "",
@@ -100,7 +108,12 @@ function Register() {
   console.log(this.v$);
 
   if (terms) {
+    loading.value = true;
+
     store.dispatch("signup", formData);
+
+    loading.value = false;
+
     if (store._state.data.done === 200) {
       router.push({ name: "verification" });
     }

@@ -33,10 +33,27 @@
         />
       </div>
 
-      <button type="submit" class="btn btn-block btn-primary mt-3">
-        Submit
-      </button>
+      <div>
+        <button
+          v-if="!loading"
+          type="submit"
+          class="btn btn-block btn-primary mt-3"
+        >
+          Submit
+        </button>
+        <div v-if="loading" class="mt-3">Loading . . .</div>
+      </div>
     </form>
+
+    <div class="mt-3">
+      <span>Don't have an account?</span>
+      <RouterLink
+        class=" my-3 text-center signupBtn nav-link rounded "
+        :class="$route.name == 'signup' ? 'active' : ''"
+        to="/auth/signup"
+        >Signup</RouterLink
+      >
+    </div>
   </div>
 </template>
 
@@ -48,6 +65,7 @@ import { useVuelidate } from "@vuelidate/core";
 import { required, minLength, helpers, sameAs } from "@vuelidate/validators";
 
 const router = useRouter();
+const loading = ref(false);
 
 const formData = reactive({
   mobile: null,
@@ -65,9 +83,13 @@ const v$ = useVuelidate(rules, formData);
 function login() {
   this.v$.$validate();
 
+  loading.value = true;
+
   console.log(this.v$);
   console.log(formData);
   store.dispatch("login", formData);
+
+  loading.value = false;
 
   if ((store._state.data.getToken = !"")) {
     router.push({ name: "dashboard" });
