@@ -76,6 +76,10 @@ function verify() {
   console.log(this.v$);
   console.log(dataVerify);
   store.dispatch("verify", dataVerify);
+
+  if ((store._state.data.getToken = !"")) {
+    router.push({ name: "dashboard" });
+  }
 }
 
 function resend() {
@@ -89,8 +93,5 @@ function resend() {
   console.log("mobile");
   store.dispatch("resend", mobile);
 
-  if ((store._state.data.getToken = !"")) {
-    router.push({ name: "dashboard" });
-  }
 }
 </script>

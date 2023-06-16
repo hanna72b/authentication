@@ -43,8 +43,11 @@
 <script setup>
 import { ref, reactive, toRefs, computed } from "vue";
 import store from "../store";
+import { useRouter } from "vue-router";
 import { useVuelidate } from "@vuelidate/core";
 import { required, minLength, helpers, sameAs } from "@vuelidate/validators";
+
+const router = useRouter();
 
 const formData = reactive({
   mobile: null,
@@ -65,5 +68,9 @@ function login() {
   console.log(this.v$);
   console.log(formData);
   store.dispatch("login", formData);
+
+  if ((store._state.data.getToken = !"")) {
+    router.push({ name: "dashboard" });
+  }
 }
 </script>

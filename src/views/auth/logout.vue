@@ -12,10 +12,20 @@
 </template>
 
 <script setup>
+import store from "../../store";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
 function logout() {
   console.log("logout");
   localStorage.removeItem("token");
   localStorage.removeItem("mobilePassword");
+
+
+  if ((store._state.data.getToken == "")) {
+    router.push({ name: "login" });
+  }
 }
 </script>
 

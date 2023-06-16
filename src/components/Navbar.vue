@@ -17,7 +17,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse marginLeft" id="navbarText">
+      <div class="collapse navbar-collapse marginLeft justify-content-end" id="navbarText">
         <ul
           v-if="(userToken != null)"
           class="d-flex align-items-center list-unstyled me-auto mb-2 mb-lg-0"
