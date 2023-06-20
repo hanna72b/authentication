@@ -5,6 +5,7 @@ const store = createStore({
   state: {
     done: null,
     getToken: "",
+    data : ''
   },
   getters: {},
   mutations: {
@@ -14,6 +15,9 @@ const store = createStore({
     verify(state, response) {
       state.getToken = response;
     },
+    login(state,userData){
+      state.data = userData;
+    }
   },
   actions: {
     async signup({ commit }, formData) {
@@ -60,7 +64,9 @@ const store = createStore({
         .then((response) => {
           console.log("login response", response);
           localStorage.setItem("token", response.data.token);
-          localStorage.setItem("mobilePassword", response.config.data);
+          const userData = response.config.data ;
+          commit("login", userData);
+
         })
         .catch((error) => {
           console.log("login error", error);

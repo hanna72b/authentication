@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import store from "../store";
 export default {
   data() {
     return {
@@ -17,8 +18,9 @@ export default {
   },
   mounted() {
     this.userToken = localStorage.getItem("token");
-    console.log(this.userToken);
-    this.myMobile = localStorage.getItem("mobilePassword");
+    console.log(store.state);
+    
+
   },
 };
 </script>
