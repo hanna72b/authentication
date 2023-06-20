@@ -17,6 +17,9 @@ const router = createRouter({
       path: "/dashboard",
       name: "dashboard",
       component: dashboard,
+      meta: {
+        requiresAuth: true,
+      }
     },
     {
       path: "/auth/signup",
@@ -27,6 +30,9 @@ const router = createRouter({
       path: "/auth/verification",
       name: "verification",
       component: verification,
+      meta: {
+        requiresAuth: true,
+      }
     },
     {
       path: "/auth/logout",
@@ -34,6 +40,23 @@ const router = createRouter({
       component: logout,
     },
   ],
+});
+
+
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('token');
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (!token) {
+      next({
+        path: '/',
+        query: { redirect: to.fullPath },
+      });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
 });
 
 export default router;
